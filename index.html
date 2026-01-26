@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pack de Prompts - Librería de comandos optimizados</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --primary-dark: #5A52D3;
+            --primary-light: #8B85FF;
+            --secondary: #FF6584;
+            --accent: #36D1DC;
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --dark: #1A1A2E;
+            --darker: #0F0F1C;
+            --light: #F8F9FA;
+            --gray: #6C757D;
+            --light-gray: #E9ECEF;
+            --card-bg: #252540;
+            --card-border: #34345C;
+            --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            --gradient-dark: linear-gradient(135deg, var(--dark) 0%, #16213E 100%);
+            --border-radius: 16px;
+            --border-radius-sm: 8px;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            --shadow-light: 0 5px 15px rgba(108, 99, 255, 0.15);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comfortaa', sans-serif;
+            line-height: 1.6;
+            color: var(--light);
+            background: var(--darker);
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(108, 99, 255, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 101, 132, 0.05) 0%, transparent 20%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(26, 26, 46, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1.2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
+        }
+
+        .logo-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        /* Botones */
+        .btn {
+            padding: 12px 28px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius-sm);
+            font-family: 'Comfortaa', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-light);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: rgba(108, 99, 255, 0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 5rem 0 4rem;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #fff 0%, var(--primary-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+        }
+
+        /* Stats */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            margin-top: 5px;
+        }
+
+        /* Filtros y búsqueda */
+        .search-section {
+            margin: 2.5rem 0 3rem;
+        }
+
+        .search-container {
+            display: flex;
+            gap: 12px;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .search-box {
+            flex: 1;
+            padding: 18px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            font-family: 'Comfortaa', sans-serif;
+            font-size: 1rem;
+            color: white;
+            transition: var(--transition);
+        }
+
+        .search-box::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+        }
+
+        .filter-tags {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .tag {
+            padding: 10px 22px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            font-family: 'Comfortaa', sans-serif;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .tag:hover,
+        .tag.active {
+            background: rgba(108, 99, 255, 0.15);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        /* Grid de prompts */
+        .section-title {
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .prompts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 2rem;
+            margin-bottom: 5rem;
+        }
+
+        .prompt-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .prompt-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary);
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .prompt-header {
+            padding: 1.8rem 1.8rem 1rem;
+            position: relative;
+        }
+
+        .prompt-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(108, 99, 255, 0.1);
+            border-radius: 14px;
+            margin-bottom: 1.2rem;
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        .prompt-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .prompt-category {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            border: 1px solid rgba(54, 209, 220, 0.2);
+        }
+
+        .prompt-body {
+            padding: 0 1.8rem 1.8rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .prompt-description {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .prompt-preview {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1.2rem;
+            border-radius: var(--border-radius-sm);
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.7);
+            border-left: 4px solid var(--primary);
+            max-height: 120px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .prompt-preview:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.4));
+        }
+
+        .prompt-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .prompt-stats {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        .stat i {
+            color: var(--primary-light);
+        }
+
+        /* Modal de detalle */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 20, 0.9);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            padding: 2rem 2rem 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .modal-subtitle {
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+
+        .close-modal {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 101, 132, 0.1);
+            border-color: var(--secondary);
+            color: var(--secondary);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .modal-section h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-section h3 i {
+            font-size: 1.2rem;
+        }
+
+        .prompt-example {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem;
+            border-radius: var(--border-radius-sm);
+            white-space: pre-line;
+            line-height: 1.6;
+            font-family: monospace;
+            font-size: 1rem;
+            border-left: 4px solid var(--accent);
+            overflow-x: auto;
+        }
+
+        .tips-list {
+            list-style: none;
+        }
+
+        .tips-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .tips-list li:last-child {
+            border-bottom: none;
+        }
+
+        .tips-list i {
+            color: var(--accent);
+            margin-top: 3px;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(15, 15, 28, 0.9);
+            border-top: 1px solid var(--glass-border);
+            padding: 3rem 0 2.5rem;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-logo:hover {
+            transform: translateY(-2px);
+        }
+
+        .copyright {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-top: 1.5rem;
+        }
+
+        /* Home link styles */
+        .home-link {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .prompts-grid {
+                grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .hero {
+                padding: 3rem 0 2.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2.3rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .search-container {
+                flex-direction: column;
+            }
+
+            .prompts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                gap: 2rem;
+            }
+
+            .filter-tags {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.95rem;
+            }
+
+            .modal-header,
+            .modal-body {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo" id="homeLink">
+                    <div>Pack de Prompts</div>
+                </a>
+                <div class="header-actions">
+                    <button class="btn btn-outline" id="exploreBtn">
+                        <i class="fas fa-compass"></i> Explorar
+                    </button>
+                    <button class="btn" id="featuredBtn">
+                        <i class="fas fa-star"></i> Destacados
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Descubre Prompts Especializados para IA</h1>
+            <p>Accede a nuestra biblioteca de comandos optimizados y profesionales. Ahorra horas de ensayo y error
+                con herramientas como ChatGPT, y otros ChatsIA más.</p>
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-box"
+                    placeholder="Buscar prompts por palabra clave, categoría o uso...">
+                <button class="btn" id="searchBtn">
+                    <i class="fas fa-search"></i> Buscar
+                </button>
+            </div>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">300+</div>
+                    <div class="stat-label">Prompts Especializados</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Categorías Profesionales</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Satisfacción de Usuarios</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filtros -->
+    <section class="search-section">
+        <div class="container">
+            <div class="filter-tags" id="categoryFilters">
+                <!-- Las categorías se cargarán con JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Grid de prompts -->
+    <main class="container">
+        <h2 class="section-title">Packs de Prompts por Categoría</h2>
+        <div class="prompts-grid" id="promptsGrid">
+            <!-- Los prompts se cargarán con JavaScript -->
+        </div>
+    </main>
+
+    <!-- Modal de detalle -->
+    <div class="modal-overlay" id="promptDetailModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h2 class="modal-title" id="detailTitle"></h2>
+                    <div class="modal-subtitle" id="detailSubtitle"></div>
+                </div>
+                <button class="close-modal" id="closeDetailBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h3><i class="fas fa-info-circle"></i> Descripción</h3>
+                    <p id="detailDescription"></p>
+                </div>
+
+                <div class="modal-section">
+                    <h3><i class="fas fa-code"></i> Ejemplo de Prompt</h3>
+                    <div class="prompt-example" id="detailExample"></div>
+                </div>
+
+                <div class="modal-section">
+                    <h3><i class="fas fa-lightbulb"></i> Consejos de Uso</h3>
+                    <ul class="tips-list" id="detailTips"></ul>
+                </div>
+
+                <div class="modal-actions">
+                    <button class="btn btn-outline" id="savePromptBtn">
+                        <i class="far fa-bookmark"></i> Guardar para más tarde
+                    </button>
+                    <button class="btn" id="copyPromptBtn">
+                        <i class="far fa-copy"></i> Copiar Prompt
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <a href="#" class="footer-logo" id="footerHomeLink">Pack de Prompts</a>
+                <div class="copyright">
+                    <p>© 2026 | Creado por Profesor Bill Papas</p>
+                    <p>© 2026 | Todos los Derechos Reservados</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Datos de ejemplo para los packs de prompts con nuevas categorías
+        const promptPacks = [
+            {
+                id: 1,
+                title: "E-Commerce: Descripciones que Convierten",
+                category: "E-Commerce",
+                description: "Comandos optimizados para crear descripciones de productos persuasivas que aumentan las conversiones. Ideal para Shopify, Amazon, WooCommerce y otras plataformas.",
+                example: "Actúa como un copywriter experto en e-commerce. Crea una descripción para [producto] dirigida a [audiencia] con estas características: [lista de características]. Enfócate en beneficios, usa storytelling, incluye llamadas a la acción y optimiza para SEO.",
+                tips: [
+                    "Incluye palabras clave de búsqueda naturalmente",
+                    "Destaca el problema que resuelve el producto",
+                    "Usa lenguaje sensorial (imagine, sienta, experimente)",
+                    "Incluye garantías y políticas de devolución",
+                    "Añade testimonios o calificaciones cuando sea posible"
+                ],
+                promptCount: 45,
+                popularity: 96,
+                saves: 1450,
+                icon: "fas fa-shopping-cart"
+            },
+            {
+                id: 2,
+                title: "Content Creator: Guiones para Videos",
+                category: "Content Creator",
+                description: "Prompts para crear guiones atractivos para YouTube, TikTok, Instagram Reels y podcasts. Incluye estructuras para tutoriales, reseñas y contenido educativo.",
+                example: "Crea un guion para un video de YouTube sobre [tema]. Duración: [duración]. Público objetivo: [audiencia]. Estructura:\n1. Intro impactante (primeros 15 segundos)\n2. Presentación del problema\n3. Solución paso a paso\n4. Demostración visual\n5. Llamada a la acción\n6. Outro con enlaces relevantes",
+                tips: [
+                    "Haz la intro lo suficientemente intrigante para retener audiencia",
+                    "Incluye momentos clave para elementos visuales o gráficos",
+                    "Planifica pausas naturales para edición",
+                    "Añade notas sobre tono de voz y énfasis",
+                    "Considera el formato vertical para redes sociales"
+                ],
+                promptCount: 38,
+                popularity: 92,
+                saves: 1120,
+                icon: "fas fa-video"
+            },
+            {
+                id: 3,
+                title: "SEO: Optimización de Contenido",
+                category: "SEO",
+                description: "Comandos para investigación de keywords, optimización on-page, análisis de competencia y creación de contenido rankeable en motores de búsqueda.",
+                example: "Analiza el contenido sobre [tema principal] y sugiere:\n1. 10 keywords de cola larga relacionadas\n2. Estructura óptima de H1, H2, H3\n3. Meta descripción atractiva (150-160 caracteres)\n4. URL amigable para SEO\n5. Lista de enlaces internos relevantes\n6. Elementos de rich snippets a incluir",
+                tips: [
+                    "Prioriza la intención de búsqueda del usuario",
+                    "Incluye keywords en los primeros 100 palabras",
+                    "Optimiza imágenes con alt text descriptivo",
+                    "Mantén la densidad de keywords natural (1-2%)",
+                    "Actualiza contenido existente periódicamente"
+                ],
+                promptCount: 42,
+                popularity: 94,
+                saves: 1320,
+                icon: "fas fa-search"
+            },
+            {
+                id: 4,
+                title: "Software Development: Code Review",
+                category: "Software Development",
+                description: "Prompts para análisis de código, identificación de bugs, sugerencias de optimización y mejores prácticas de programación en múltiples lenguajes.",
+                example: "Revisa este código [lenguaje de programación] y:\n1. Identifica posibles bugs o errores\n2. Sugiere optimizaciones de rendimiento\n3. Verifica cumplimiento de estándares de código\n4. Propone refactorizaciones para mejor legibilidad\n5. Detecta vulnerabilidades de seguridad\n6. Sugiere tests unitarios a implementar",
+                tips: [
+                    "Especifica el lenguaje y framework exactos",
+                    "Incluye el contexto del proyecto cuando sea relevante",
+                    "Menciona requisitos específicos de rendimiento",
+                    "Considera la escalabilidad del código",
+                    "Prioriza problemas críticos sobre mejoras cosméticas"
+                ],
+                promptCount: 35,
+                popularity: 89,
+                saves: 980,
+                icon: "fas fa-code"
+            },
+            {
+                id: 5,
+                title: "Finance: Análisis de Inversiones",
+                category: "Finance",
+                description: "Comandos para análisis financiero, evaluación de inversiones, modelado de escenarios y reportes de riesgo para profesionales de finanzas.",
+                example: "Analiza la viabilidad de invertir en [empresa/activo] considerando:\n1. Análisis fundamental (ratios financieros, crecimiento)\n2. Análisis técnico (tendencias, niveles de soporte/resistencia)\n3. Evaluación de riesgos (mercado, sector, empresa)\n4. Proyecciones a 1, 3 y 5 años\n5. Escenarios optimistas, realistas y pesimistas\n6. Recomendación final con justificación",
+                tips: [
+                    "Especifica el horizonte temporal de la inversión",
+                    "Incluye datos históricos relevantes cuando estén disponibles",
+                    "Considera factores macroeconómicos actuales",
+                    "Evalúa tanto oportunidades como riesgos",
+                    "Proporciona recomendaciones accionables"
+                ],
+                promptCount: 28,
+                popularity: 87,
+                saves: 760,
+                icon: "fas fa-chart-line"
+            },
+            {
+                id: 6,
+                title: "Writing: Corrección y Mejora",
+                category: "Writing",
+                description: "Prompts para edición de textos, mejora de estilo, corrección gramatical y adaptación de tono para diferentes tipos de contenido escrito.",
+                example: "Mejora este texto manteniendo el mensaje principal pero:\n1. Corrige errores gramaticales y de puntuación\n2. Mejora la fluidez y cohesión\n3. Ajusta el tono a [tono deseado: formal, casual, persuasivo]\n4. Optimiza para [propósito: SEO, conversión, claridad]\n5. Sugiere títulos alternativos más atractivos\n6. Proporciona versión corta y versión extendida",
+                tips: [
+                    "Especifica el público objetivo del texto",
+                    "Indica el formato final (blog post, email, informe)",
+                    "Menciona restricciones de longitud si las hay",
+                    "Proporciona ejemplos del estilo deseado",
+                    "Pide versiones alternativas para comparar"
+                ],
+                promptCount: 32,
+                popularity: 91,
+                saves: 1050,
+                icon: "fas fa-pen"
+            },
+            {
+                id: 7,
+                title: "Business Productivity: Automatización",
+                category: "Business Productivity",
+                description: "Comandos para optimizar procesos de negocio, automatizar tareas repetitivas y mejorar la eficiencia operativa en diferentes departamentos.",
+                example: "Diseña un sistema para automatizar [proceso de negocio] que incluya:\n1. Mapeo del proceso actual\n2. Identificación de pasos automatizables\n3. Selección de herramientas adecuadas\n4. Plan de implementación por fases\n5. Métricas para medir el ROI\n6. Posibles obstáculos y soluciones",
+                tips: [
+                    "Define claramente los objetivos del proceso",
+                    "Identifica los cuellos de botella actuales",
+                    "Considera la curva de aprendizaje del equipo",
+                    "Evalúa costos iniciales vs ahorros a largo plazo",
+                    "Planifica mantenimiento y actualizaciones"
+                ],
+                promptCount: 40,
+                popularity: 88,
+                saves: 890,
+                icon: "fas fa-cogs"
+            },
+            {
+                id: 8,
+                title: "Marketing: Campañas en Redes Sociales",
+                category: "Marketing",
+                description: "Prompts para planificar, ejecutar y analizar campañas en redes sociales con enfoque en engagement, conversiones y crecimiento de audiencia.",
+                example: "Crea una campaña para [plataforma] promocionando [producto/servicio] que incluya:\n1. Objetivos SMART específicos\n2. Buyer persona detallada\n3. Calendario de contenido (4 semanas)\n4. Presupuesto estimado por canal\n5. KPIs a monitorear\n6. Plan de contingencia",
+                tips: [
+                    "Alinea la campaña con objetivos de negocio más amplios",
+                    "Segmenta audiencias para mayor personalización",
+                    "Prueba diferentes formatos de contenido",
+                    "Programa publicaciones en horarios óptimos",
+                    "Prepara respuestas para comentarios frecuentes"
+                ],
+                promptCount: 36,
+                popularity: 93,
+                saves: 1200,
+                icon: "fas fa-bullhorn"
+            },
+            {
+                id: 9,
+                title: "E-Commerce: Email Marketing Post-Compra",
+                category: "E-Commerce",
+                description: "Secuencias de emails automatizadas para retención de clientes, upsell, cross-sell y recuperación de carritos abandonados.",
+                example: "Diseña una secuencia de 5 emails post-compra para [tipo de producto] que:\n1. Confirme la compra y agradezca\n2. Ofrezca guía de uso/tutorial\n3. Solicite reseña o testimonio\n4. Sugiera productos complementarios\n5. Ofrezca descuento para próxima compra",
+                tips: [
+                    "Personaliza con nombre del cliente y detalles de compra",
+                    "Incluye contenido de valor (guías, tips)",
+                    "Timing adecuado entre emails (día 1, 3, 7, 14, 30)",
+                    "Segmenta por tipo de producto comprado",
+                    "Mide tasa de apertura y clicks para optimizar"
+                ],
+                promptCount: 30,
+                popularity: 90,
+                saves: 1100,
+                icon: "fas fa-envelope"
+            },
+            {
+                id: 10,
+                title: "Software Development: Documentación Técnica",
+                category: "Software Development",
+                description: "Comandos para crear documentación clara de APIs, guías de usuario, READMEs y documentación técnica para desarrolladores.",
+                example: "Crea documentación para [API/función] que incluya:\n1. Descripción general y propósito\n2. Requisitos previos de instalación\n3. Ejemplo básico de uso\n4. Referencia completa de parámetros\n5. Casos de uso avanzados\n6. Solución de problemas comunes",
+                tips: [
+                    "Empieza con un ejemplo 'hello world' simple",
+                    "Usa lenguaje claro evitando jerga innecesaria",
+                    "Incluye snippets de código ejecutables",
+                    "Mantenga consistencia en formato y estilo",
+                    "Actualiza con cada cambio significativo"
+                ],
+                promptCount: 25,
+                popularity: 85,
+                saves: 720,
+                icon: "fas fa-book"
+            },
+            {
+                id: 11,
+                title: "Finance: Reportes Mensuales",
+                category: "Finance",
+                description: "Plantillas y prompts para crear reportes financieros mensuales, dashboards ejecutivos y análisis de desempeño para stakeholders.",
+                example: "Genera un reporte financiero mensual para [empresa/departamento] incluyendo:\n1. Resumen ejecutivo (1 página)\n2. KPIs financieros clave vs presupuesto\n3. Análisis de variaciones significativas\n4. Proyecciones actualizadas\n5. Recomendaciones estratégicas\n6. Anexos con datos detallados",
+                tips: [
+                    "Adapta el nivel de detalle a la audiencia",
+                    "Usa visualizaciones para datos complejos",
+                    "Destaca logros y áreas de mejora",
+                    "Proporciona contexto para números importantes",
+                    "Incluye tanto datos históricos como proyecciones"
+                ],
+                promptCount: 22,
+                popularity: 86,
+                saves: 680,
+                icon: "fas fa-file-invoice-dollar"
+            },
+            {
+                id: 12,
+                title: "Business Productivity: Gestión de Proyectos",
+                category: "Business Productivity",
+                description: "Prompts para planificación de proyectos, asignación de recursos, seguimiento de progreso y gestión de riesgos en equipos.",
+                example: "Crea un plan de proyecto para [nombre del proyecto] que incluya:\n1. Objetivos y alcance claros\n2. Desglose de tareas (WBS)\n3. Cronograma con hitos clave\n4. Asignación de recursos y responsabilidades\n5. Matriz de riesgos y mitigación\n6. Plan de comunicación del proyecto",
+                tips: [
+                    "Define criterios de éxito medibles",
+                    "Establece hitos intermedios para seguimiento",
+                    "Asigna dueños claros para cada tarea",
+                    "Planifica reuniones regulares de seguimiento",
+                    "Documenta lecciones aprendidas"
+                ],
+                promptCount: 34,
+                popularity: 89,
+                saves: 950,
+                icon: "fas fa-tasks"
+            }
+        ];
+
+        // Todas las categorías incluyendo las nuevas
+        const categories = [
+            "Todos",
+            "E-Commerce",
+            "Content Creator",
+            "SEO",
+            "Software Development",
+            "Finance",
+            "Writing",
+            "Business Productivity",
+            "Marketing",
+            "Social Media",
+            "Diseño",
+            "IA"
+        ];
+
+        // Referencias a elementos del DOM
+        const promptsGrid = document.getElementById('promptsGrid');
+        const categoryFilters = document.getElementById('categoryFilters');
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const exploreBtn = document.getElementById('exploreBtn');
+        const featuredBtn = document.getElementById('featuredBtn');
+        const promptDetailModal = document.getElementById('promptDetailModal');
+        const closeDetailBtn = document.getElementById('closeDetailBtn');
+        const detailTitle = document.getElementById('detailTitle');
+        const detailSubtitle = document.getElementById('detailSubtitle');
+        const detailDescription = document.getElementById('detailDescription');
+        const detailExample = document.getElementById('detailExample');
+        const detailTips = document.getElementById('detailTips');
+        const copyPromptBtn = document.getElementById('copyPromptBtn');
+        const savePromptBtn = document.getElementById('savePromptBtn');
+        const homeLink = document.getElementById('homeLink');
+        const footerHomeLink = document.getElementById('footerHomeLink');
+
+        // Variables de estado
+        let currentPrompts = [...promptPacks];
+        let currentCategory = "Todos";
+        let currentSearchTerm = "";
+        let selectedPrompt = null;
+
+        // Inicializar la aplicación
+        function initApp() {
+            renderCategoryFilters();
+            renderPromptsGrid();
+            setupEventListeners();
+        }
+
+        // Renderizar los filtros por categoría
+        function renderCategoryFilters() {
+            categoryFilters.innerHTML = "";
+
+            categories.forEach(category => {
+                const tag = document.createElement('div');
+                tag.className = `tag ${category === "Todos" ? "active" : ""}`;
+                tag.textContent = category;
+                tag.dataset.category = category;
+
+                tag.addEventListener('click', () => {
+                    // Remover clase active de todos los tags
+                    document.querySelectorAll('.tag').forEach(t => {
+                        t.classList.remove('active');
+                    });
+
+                    // Agregar clase active al tag clickeado
+                    tag.classList.add('active');
+
+                    // Filtrar por categoría
+                    filterByCategory(category);
+                });
+
+                categoryFilters.appendChild(tag);
+            });
+        }
+
+        // Renderizar la cuadrícula de prompts
+        function renderPromptsGrid() {
+            promptsGrid.innerHTML = "";
+
+            if (currentPrompts.length === 0) {
+                promptsGrid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 4rem; background: var(--card-bg); border-radius: var(--border-radius); border: 1px solid var(--card-border);">
+                        <i class="fas fa-search" style="font-size: 3.5rem; color: var(--gray); margin-bottom: 1.5rem;"></i>
+                        <h3 style="color: var(--light); margin-bottom: 1rem;">No se encontraron prompts</h3>
+                        <p style="color: rgba(255, 255, 255, 0.6); max-width: 500px; margin: 0 auto;">Intenta con otros términos de búsqueda o selecciona una categoría diferente.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            currentPrompts.forEach(prompt => {
+                const promptCard = document.createElement('div');
+                promptCard.className = 'prompt-card';
+
+                promptCard.innerHTML = `
+                    <div class="card-badge">${prompt.promptCount} prompts</div>
+                    <div class="prompt-header">
+                        <div class="prompt-icon">
+                            <i class="${prompt.icon}"></i>
+                        </div>
+                        <h3 class="prompt-title">${prompt.title}</h3>
+                        <span class="prompt-category">${prompt.category}</span>
+                    </div>
+                    <div class="prompt-body">
+                        <p class="prompt-description">${prompt.description}</p>
+                        <div class="prompt-preview">${truncateText(prompt.example, 200)}</div>
+                        <div class="prompt-footer">
+                            <div class="prompt-stats">
+                                <div class="stat">
+                                    <i class="fas fa-star"></i>
+                                    <span>${prompt.popularity}%</span>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-bookmark"></i>
+                                    <span>${formatNumber(prompt.saves)}</span>
+                                </div>
+                            </div>
+                            <button class="btn" data-id="${prompt.id}">
+                                <i class="fas fa-eye"></i> Ver Pack
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                // Evento para mostrar detalle
+                const viewBtn = promptCard.querySelector('button[data-id]');
+                viewBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const promptId = parseInt(e.target.closest('button').dataset.id);
+                    const prompt = promptPacks.find(p => p.id === promptId);
+                    if (prompt) showPromptDetail(prompt);
+                });
+
+                // Evento para hacer clic en toda la tarjeta
+                promptCard.addEventListener('click', (e) => {
+                    if (!e.target.closest('button')) {
+                        const promptId = parseInt(promptCard.querySelector('button').dataset.id);
+                        const prompt = promptPacks.find(p => p.id === promptId);
+                        if (prompt) showPromptDetail(prompt);
+                    }
+                });
+
+                promptsGrid.appendChild(promptCard);
+            });
+        }
+
+        // Filtrar por categoría
+        function filterByCategory(category) {
+            currentCategory = category;
+
+            if (category === "Todos") {
+                currentPrompts = [...promptPacks];
+            } else {
+                currentPrompts = promptPacks.filter(prompt => prompt.category === category);
+            }
+
+            // Aplicar también el término de búsqueda actual si existe
+            if (currentSearchTerm) {
+                currentPrompts = currentPrompts.filter(prompt =>
+                    prompt.title.toLowerCase().includes(currentSearchTerm) ||
+                    prompt.description.toLowerCase().includes(currentSearchTerm) ||
+                    prompt.category.toLowerCase().includes(currentSearchTerm)
+                );
+            }
+
+            renderPromptsGrid();
+
+            // Scroll suave a la sección de resultados
+            document.querySelector('.section-title').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        // Configurar event listeners
+        function setupEventListeners() {
+            // Búsqueda
+            searchBtn.addEventListener('click', performSearch);
+            searchInput.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+
+            // Botones de header
+            exploreBtn.addEventListener('click', () => {
+                // Resetear filtros
+                currentSearchTerm = "";
+                searchInput.value = "";
+                currentCategory = "Todos";
+
+                // Activar tag "Todos"
+                document.querySelectorAll('.tag').forEach(tag => {
+                    tag.classList.remove('active');
+                    if (tag.dataset.category === "Todos") {
+                        tag.classList.add('active');
+                    }
+                });
+
+                // Mostrar todos
+                currentPrompts = [...promptPacks];
+                renderPromptsGrid();
+
+                // Scroll a resultados
+                document.querySelector('.section-title').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+
+            featuredBtn.addEventListener('click', () => {
+                // Mostrar solo los más populares
+                currentPrompts = promptPacks.filter(prompt => prompt.popularity >= 90);
+                renderPromptsGrid();
+
+                // Actualizar tags
+                document.querySelectorAll('.tag').forEach(tag => {
+                    tag.classList.remove('active');
+                });
+
+                // Scroll a resultados
+                document.querySelector('.section-title').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+
+            // Cerrar modal de detalle
+            closeDetailBtn.addEventListener('click', () => {
+                promptDetailModal.style.display = "none";
+            });
+
+            // Copiar prompt al portapapeles
+            copyPromptBtn.addEventListener('click', copyPromptToClipboard);
+
+            // Guardar prompt
+            savePromptBtn.addEventListener('click', savePrompt);
+
+            // Enlaces a la página principal
+            homeLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                goToHomePage();
+            });
+
+            footerHomeLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                goToHomePage();
+            });
+        }
+
+        // Función para ir a la página principal
+        function goToHomePage() {
+            // Resetear filtros
+            currentSearchTerm = "";
+            searchInput.value = "";
+            currentCategory = "Todos";
+
+            // Activar tag "Todos"
+            document.querySelectorAll('.tag').forEach(tag => {
+                tag.classList.remove('active');
+                if (tag.dataset.category === "Todos") {
+                    tag.classList.add('active');
+                }
+            });
+
+            // Mostrar todos los prompts
+            currentPrompts = [...promptPacks];
+            renderPromptsGrid();
+
+            // Scroll al inicio de la página
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+
+            // Cerrar modal si está abierto
+            promptDetailModal.style.display = "none";
+
+            // Mostrar mensaje de confirmación (opcional)
+            console.log("Navegando a la página principal...");
+        }
+
+        // Realizar búsqueda
+        function performSearch() {
+            currentSearchTerm = searchInput.value.toLowerCase().trim();
+
+            // Filtrar por categoría actual primero
+            let filteredPrompts;
+
+            if (currentCategory === "Todos") {
+                filteredPrompts = [...promptPacks];
+            } else {
+                filteredPrompts = promptPacks.filter(prompt => prompt.category === currentCategory);
+            }
+
+            // Aplicar filtro de búsqueda
+            if (currentSearchTerm) {
+                filteredPrompts = filteredPrompts.filter(prompt =>
+                    prompt.title.toLowerCase().includes(currentSearchTerm) ||
+                    prompt.description.toLowerCase().includes(currentSearchTerm) ||
+                    prompt.category.toLowerCase().includes(currentSearchTerm)
+                );
+            }
+
+            currentPrompts = filteredPrompts;
+            renderPromptsGrid();
+        }
+
+        // Mostrar detalle del prompt
+        function showPromptDetail(prompt) {
+            selectedPrompt = prompt;
+
+            // Actualizar contenido del modal
+            detailTitle.textContent = prompt.title;
+            detailSubtitle.textContent = `${prompt.category} • ${prompt.promptCount} prompts • ${prompt.popularity}% efectividad`;
+            detailDescription.textContent = prompt.description;
+            detailExample.textContent = prompt.example;
+
+            // Actualizar tips
+            detailTips.innerHTML = "";
+            prompt.tips.forEach(tip => {
+                const li = document.createElement('li');
+                li.innerHTML = `<i class="fas fa-check-circle"></i> <span>${tip}</span>`;
+                detailTips.appendChild(li);
+            });
+
+            // Mostrar modal
+            promptDetailModal.style.display = "flex";
+        }
+
+        // Copiar prompt al portapapeles
+        function copyPromptToClipboard() {
+            if (!selectedPrompt) return;
+
+            const textToCopy = selectedPrompt.example;
+
+            navigator.clipboard.writeText(textToCopy)
+                .then(() => {
+                    // Mostrar confirmación
+                    const originalText = copyPromptBtn.innerHTML;
+                    copyPromptBtn.innerHTML = '<i class="fas fa-check"></i> ¡Prompt copiado!';
+                    copyPromptBtn.style.background = 'var(--accent)';
+
+                    setTimeout(() => {
+                        copyPromptBtn.innerHTML = originalText;
+                        copyPromptBtn.style.background = '';
+                    }, 2000);
+                })
+                .catch(err => {
+                    console.error('Error al copiar: ', err);
+                    alert('No se pudo copiar el prompt. Intenta manualmente seleccionando el texto.');
+                });
+        }
+
+        // Guardar prompt
+        function savePrompt() {
+            if (!selectedPrompt) return;
+
+            // Simular guardado
+            const originalText = savePromptBtn.innerHTML;
+            savePromptBtn.innerHTML = '<i class="fas fa-check"></i> ¡Guardado!';
+            savePromptBtn.style.background = 'var(--accent)';
+
+            setTimeout(() => {
+                savePromptBtn.innerHTML = originalText;
+                savePromptBtn.style.background = '';
+            }, 2000);
+
+            // En una aplicación real, aquí se haría una llamada a una API
+            console.log(`Prompt "${selectedPrompt.title}" guardado para más tarde`);
+        }
+
+        // Función auxiliar para truncar texto
+        function truncateText(text, maxLength) {
+            if (text.length <= maxLength) return text;
+            return text.substring(0, maxLength) + '...';
+        }
+
+        // Función auxiliar para formatear números
+        function formatNumber(num) {
+            if (num >= 1000) {
+                return (num / 1000).toFixed(1) + 'k';
+            }
+            return num.toString();
+        }
+
+        // Inicializar la aplicación cuando se cargue la página
+        document.addEventListener('DOMContentLoaded', initApp);
+
+        // Cerrar modal con tecla Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && promptDetailModal.style.display === 'flex') {
+                promptDetailModal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>
