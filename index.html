@@ -674,6 +674,81 @@
     </style>
 </head>
 
+<!-- Contador de visitas -->
+<script>
+    // Contador de visitas para profesor-ai-2030.github.io/pack-prompts/
+    document.addEventListener('DOMContentLoaded', function() {
+        // Clave para almacenar las visitas en localStorage
+        const STORAGE_KEY = 'pack_prompts_visits';
+        
+        // Obtener datos de visitas almacenados o inicializar
+        let visitData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
+            totalVisits: 0,
+            uniqueVisits: 0,
+            lastVisitorId: null,
+            firstVisitDate: new Date().toISOString()
+        };
+        
+        // Generar un ID único para este visitante
+        function generateVisitorId() {
+            // Intentar obtener un ID existente
+            let visitorId = localStorage.getItem('pack_prompts_visitor_id');
+            
+            // Si no existe, crear uno nuevo
+            if (!visitorId) {
+                visitorId = 'visitor_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                localStorage.setItem('pack_prompts_visitor_id', visitorId);
+                
+                // Incrementar visitas únicas si es la primera vez de este usuario
+                if (!visitData.lastVisitorId || visitData.lastVisitorId !== visitorId) {
+                    visitData.uniqueVisits++;
+                }
+            }
+            
+            return visitorId;
+        }
+        
+        // Actualizar contadores
+        const visitorId = generateVisitorId();
+        const isNewVisitor = !visitData.lastVisitorId || visitData.lastVisitorId !== visitorId;
+        
+        // Incrementar contador total
+        visitData.totalVisits++;
+        
+        // Actualizar ID del último visitante
+        visitData.lastVisitorId = visitorId;
+        visitData.lastVisitDate = new Date().toISOString();
+        
+        // Guardar datos actualizados
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(visitData));
+        
+        // Mostrar contadores en la página (si existen los elementos)
+        function updateCounterDisplay() {
+            const totalElement = document.getElementById('totalVisits');
+            const uniqueElement = document.getElementById('uniqueVisits');
+            const simpleElement = document.getElementById('visitCounter');
+            
+            if (totalElement) {
+                totalElement.textContent = visitData.totalVisits.toLocaleString();
+            }
+            
+            if (uniqueElement) {
+                uniqueElement.textContent = visitData.uniqueVisits.toLocaleString();
+            }
+            
+            if (simpleElement) {
+                simpleElement.textContent = visitData.totalVisits.toLocaleString();
+            }
+        }
+        
+        // Actualizar la visualización
+        updateCounterDisplay();
+        
+        // Para depuración: mostrar datos en consola
+        console.log('Contador de visitas activado:', visitData);
+    });
+    </script>
+
 <body>
     <!-- Header -->
     <header>
@@ -692,8 +767,12 @@
                 </div>
             </div>
         </div>
-    </header>
-
+    </header> <br><br><br>
+    <p><center>
+        <div class="visit-counter">
+            <span>Visitas: <strong id="visitCounter">0</strong></span>
+        </div>
+    </center></p>
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
